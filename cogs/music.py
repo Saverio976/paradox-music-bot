@@ -40,13 +40,17 @@ class Music(commands.Cog):
     @commands.command()
     async def playP(self, ctx, playlist):
         '''ajoute les musiques de la playlist dans la file d'Attente'''
-        rdbRss = data.rdbRss()
-        query = {'id':int(playlist)}
 
-        with pymongo.MongoClient(rdbRss) as cluster:
-            db = cluster['ParadoxMusicBot']
-            dtab = db['Playlist']
-            x = dtab.find_one(query)['urls']
+        try:
+            query = {'id':int(playlist)}
+        except:
+            x = await utils.yt_playlist_list_musique(playlist)
+        else:
+            rdbRss = data.rdbRss()
+            with pymongo.MongoClient(rdbRss) as cluster:
+                db = cluster['ParadoxMusicBot']
+                dtab = db['Playlist']
+                x = dtab.find_one(query)['urls']
 
         for i in x:
             self.DictInfoMusic[i] = await utils.info(i)
