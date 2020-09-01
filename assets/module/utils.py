@@ -55,6 +55,37 @@ async def ytsearch(query):
 
     return r_list
 
+async def yt_playlist_list_musique(link):
+    def get_urls():
+        command = ['youtube-dl', link, '-j']
+        l_info = subprocess.run(command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    universal_newlines=True).stdout.split('\n')
+        list_link = []
+        for info in l_info:
+            try:
+                index_webpage_url = info.index('webpage_url')
+            except:
+                pass
+            else:
+                compteur_quote_mark = 0
+                i = 0
+                webpage_url = ''
+                while compteur_quote_mark != 3:
+                    webpage_url += info[index_webpage_url + i]
+                    i += 1
+                    if webpage_url[-1] == '"':
+                        compteur_quote_mark += 1
+                webpage_url = webpage_url.split()
+                webpage_url = webpage_url[1].strip('"')
+                list_link.append(webpage_url)
+        return list_link
+    loop = get_event_loop()
+    list_link = await loop.run_in_executor(ThreadPoolExecutor(), get_urls)
+    return list_link
+
+
 async def ytdownload(query, num = 0):
     def get_urls():
         if query.startswith('http'):
