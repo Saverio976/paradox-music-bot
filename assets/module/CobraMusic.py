@@ -72,11 +72,13 @@ class MusicClient:
             return True
 
     async def disconnect(self):
-        await self.voice_client.disconnect()
         try:
-            del clients[str(self.guild_id)]
+            my_client = str(self.guild_id)
         except:
             pass
+        else:
+            await self.voice_client.disconnect()
+            del clients[my_client]
 
     async def pause(self):
         self.voice_client.pause()
