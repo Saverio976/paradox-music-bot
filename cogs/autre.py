@@ -7,6 +7,7 @@ from discord.ext import commands
 client = commands.Bot(command_prefix = commands.when_mentioned_or('!'))
 
 class Other(commands.Cog):
+    '''Une category pour les commandes STF (sans thème fix)'''
 
     def __init__(self, client):
         self.client = client
@@ -59,9 +60,11 @@ class Other(commands.Cog):
         em.set_image(url="https://cdn.discordapp.com/attachments/710490015087722506/738743933105995876/salameche_2.png")
         await ctx.send(embed=em)
 
-    @client.command(aliases=['sn','StopNow','stopNow','Stopnow'])
+    @commands.command(aliases=['sn','StopNow','stopNow','Stopnow'])
+    @commands.has_role('Co Fondateur')
     async def stopnow(self, ctx):
-        await client.close()
+        '''uniquement pour ceux ayant le role Co Fondateur (permet de deconnecter le bot)'''
+        await client.logout()
 
 
 def setup(client):

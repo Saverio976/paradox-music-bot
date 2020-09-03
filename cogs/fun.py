@@ -6,12 +6,14 @@ from random import choice
 client = commands.Bot(command_prefix = commands.when_mentioned_or('!'))
 
 class Fun(commands.Cog):
+    '''Cogs ayant toutes les commandes "Fun"'''
 
     def __init__(self, client):
         self.client = client
 
     @commands.command()
     async def hug(self, ctx, someone:discord.Member):
+        '''faire un calin à @membre'''
         embed_hug =   discord.Embed(title="hug",
                                     description = f"{ctx.author} fait un calin à {someone}",
                                     colour = 0xFF0000,
@@ -22,6 +24,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def cookie(self, ctx, someone:discord.Member):
+        '''donner un cookie à @membre'''
         embed_cookie =  discord.Embed(title="cookie",
                                       description = f"{ctx.author} donne un cookie à {someone}",
                                       colour = 0xFF0000,
@@ -32,6 +35,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def punish(self, ctx, someone:discord.Member):
+        '''punir @membre'''
         embed_punish =  discord.Embed(title="punishment",
                                       description = f"{ctx.author} puni {someone}",
                                       colour = 0xFF0000,
@@ -42,6 +46,7 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def award(self, ctx, someone:discord.Member):
+        '''donner une médaille à @membre'''
         embed_award =  discord.Embed(title="award",
                                       description = f"{ctx.author} récompense {someone}",
                                       colour = 0xFF0000,
@@ -52,6 +57,7 @@ class Fun(commands.Cog):
 
     @commands.command(aliases = ["8ball", "sure"])
     async def _8ball(self, ctx, *, question):
+        '''poser une question au bot'''
         answer =   ['It is certain.', 'it is decidedly so.', 'Witout a doubt.', 'Yes, definitely.', 'You may rely on it.',
                     'As I see it, yes.', 'Most likely.', 'Outlook good.', 'Yes.', 'Signs point to yes.',
                     'Reply hazy, try later.', 'Ask again later.', 'Better not tell you now.', 'Cannot predict now.',

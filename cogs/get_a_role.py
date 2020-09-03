@@ -6,6 +6,7 @@ from assets.module import data
 client = commands.Bot(command_prefix = commands.when_mentioned_or('!'))
 
 class GetARole(commands.Cog):
+    '''categorie qui a servi pour get a role'''
 
     def __init__(self, client):
         self.client = client
@@ -13,6 +14,7 @@ class GetARole(commands.Cog):
     @commands.command()
     @commands.has_role('Co Fondateur')
     async def get_a_role(self, ctx):
+        '''permet d'initialiser le channel get-a-role'''
         message =   """liste des différents flux pris en comptes par les différents sites :
                     ```France Info (https://www.francetvinfo.fr/)
                     avec ces categories : [politique,justice,europe,marchés,sciences,senté,cinéma]

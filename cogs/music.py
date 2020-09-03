@@ -39,7 +39,7 @@ class Music(commands.Cog):
             self.CompteurMusique += 1
     @commands.command()
     async def playP(self, ctx, playlist):
-        '''ajoute les musiques de la playlist dans la file d'Attente'''
+        '''ajoute les musiques de la playlist (les salons correspondant dans la categorie PLAYLIST) dans la file d'Attente'''
 
         try:
             query = {'id':int(playlist)}
@@ -96,6 +96,7 @@ class Music(commands.Cog):
 
     @commands.command()
     async def search(self, ctx, *, query):
+        '''faire une recherche youtube'''
         r_list = utils.ytsearch()
 
         await ctx.send(f"voici la recherche sur youtube avec le(s) mot(s) clef(s) ``{query}`` : ")
@@ -181,8 +182,9 @@ class Music(commands.Cog):
         await music_client.stop()
     @commands.command()
     async def remove(self, ctx, index):
+        '''permet de supprimer une musique dans la file d'attente (la musique est representé par un index)'''
         try:
-            index = int(index)
+            index = int(index) - 1
         except ValueError:
             await ctx.send("envoyez un nombre valide")
             return
@@ -240,7 +242,7 @@ class Music(commands.Cog):
 
     @commands.command()
     async def addP(self, ctx, *, name):
-        '''permet de créer une nouvelle playlist'''
+        '''permet de créer une nouvelle playlist dans la base de donnée'''
         rdbRss = data.rdbRss()
 
         with pymongo.MongoClient(rdbRss) as cluster:
@@ -275,7 +277,7 @@ class Music(commands.Cog):
         await ctx.send("Playlist supprimée")
     @commands.command()
     async def viewP(self, ctx, mode = "no"):
-        '''pour voir les playlist déjà créée et leurs musiques'''
+        '''pour voir les playlist dans la base de donnée qui sont déjà créée et leurs musiques'''
         rdbRss = data.rdbRss()
 
         with pymongo.MongoClient(rdbRss) as cluster:
@@ -309,7 +311,7 @@ class Music(commands.Cog):
 
     @commands.command()
     async def addM(self, ctx, playlist, url):
-        '''permet d'ajouter de la musique dans une playlist'''
+        '''permet d'ajouter de la musique dans une playlist (base de donnée)'''
         rdbRss = data.rdbRss()
         with pymongo.MongoClient(rdbRss) as cluster:
             db = cluster['ParadoxMusicBot']
@@ -323,7 +325,7 @@ class Music(commands.Cog):
             await ctx.send("La playlist a été modifiée")
     @commands.command()
     async def removeM(self, ctx, playlist, url):
-        '''permet d'enlever de la musique dans une playlist'''
+        '''permet d'enlever de la musique dans une playlist(base de donnée)'''
         rdbRss = data.rdbRss()
 
         with pymongo.MongoClient(rdbRss) as cluster:
@@ -341,6 +343,7 @@ class Music(commands.Cog):
 
     @commands.command()
     async def downloadyt(self, ctx, query, number = "0"):
+        '''permet d'avoir un lien sur avec lequel on peut telecharger la musique'''
         try:
             number = int(number)
         except:

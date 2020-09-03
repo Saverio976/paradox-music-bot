@@ -36,7 +36,7 @@ class Event(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         channel = discord.utils.get(member.guild.channels, name='départ-arrivée')
-        await ctx.send(file=discord.File('./images/welcome.jpg'))
+        await channel.send(file=discord.File('./images/welcome.jpg'))
         await channel.send(f"Salut à toi, oui toi {member.mention}")
 
     @commands.Cog.listener()
@@ -83,6 +83,8 @@ class Event(commands.Cog):
             await ctx.send("CommandNotFound")
         if isinstance(error, commands.MissingRole):
             await ctx.send("role is missing to run this command : " + str(error.missing_role))
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(ctx.command.help)
         else:
             def write_logs():
                 with open("./assets/document/bot_logs.txt", "a") as file:
